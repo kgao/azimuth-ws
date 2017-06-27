@@ -28,16 +28,18 @@ def prediction():
     result = []
     if sequence is None:
         return jsonify(result)
-    else:
-        # print filter(sequence.split(","))
-        sequences = np.array(filter(sequence.split(",")))
-        # amino_acid_cut_positions = np.array([1, 1, 2])
-        # percent_peptides = np.array([0.18, 0.18, 0.35])
-        predictions = azimuth.model_comparison.predict(sequences, None, None)
-        for i, prediction in enumerate(predictions):
-            # print sequences[i], prediction
-            result.append({'Name':sequences[i],'OnTargets':[prediction]})
+    # print filter(sequence.split(","))
+    filtered_sequence = filter(sequence.split(","))
+    if not filtered_sequence:
         return jsonify(result)
+    sequences = np.array(filtered_sequence)
+    # amino_acid_cut_positions = np.array([1, 1, 2])
+    # percent_peptides = np.array([0.18, 0.18, 0.35])
+    predictions = azimuth.model_comparison.predict(sequences, None, None)
+    for i, prediction in enumerate(predictions):
+        # print sequences[i], prediction
+        result.append({'Name':sequences[i],'OnTargets':[prediction]})
+    return jsonify(result)
 
 @app.route("/api/v1.0/azure/table/summary", methods = ['GET'])
 def azure_table_summary():
