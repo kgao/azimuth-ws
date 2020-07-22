@@ -7,7 +7,7 @@ import azure.storage.blob
 
 class Settings:
     azure_account = "crispr"
-    table_name = "hg38hpcrev1"  # this is also the blob container name
+    table_name = "hg38hpcrev3"  # this is also the blob container name
     offtarget_blob_name = "%s/%s/offtargets"
 
 
